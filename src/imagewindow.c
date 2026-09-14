@@ -1845,7 +1845,8 @@ imagewindow_iimage_changed(iImage *iimage, Imagewindow *win)
 			imagewindow_imageui_add(win, imageui);
 		}
 
-		imagewindow_files_set(win, (char **) &filename, 1, FALSE);
+		char *filenames = filename;
+		imagewindow_files_set(win, &filenames, 1, FALSE);
 
 		imagewindow_imageui_set_visible(win, imageui);
 	}
