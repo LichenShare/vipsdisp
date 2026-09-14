@@ -4,6 +4,7 @@ master
 
 - resync with nip4 [kleisauke]
 - add the paintbox
+- fix crash with ^V of invalid filenames [porridgewithraisins]
 
 ## 4.1.4 19/4/26
 

@@ -57,7 +57,7 @@ struct _Imagewindow {
 	 */
 	GFile *save_folder;
 	GFile *load_folder;
-#endif /*!NIP4*/ 
+#endif /*!NIP4*/
 
 	/* Widgets.
 	 */
@@ -68,10 +68,10 @@ struct _Imagewindow {
 	GtkWidget *title;
 	GtkWidget *subtitle;
 	GtkWidget *gears;
-	GtkWidget *progress_bar;
-	GtkWidget *progress;
 	GtkWidget *error_bar;
 	GtkWidget *error_label;
+	GtkWidget *progress_bar;
+	GtkWidget *progress;
 	GtkWidget *main_box;
 	GtkWidget *stack;
 	GtkWidget *properties;
@@ -265,25 +265,6 @@ imagewindow_files_free(Imagewindow *win)
 	win->n_files = 0;
 	win->current_file = 0;
 }
-
-#ifndef NIP4
-static void
-imagewindow_files_set_list_gfiles(Imagewindow *win, GSList *files)
-{
-	GSList *p;
-	int i;
-
-	imagewindow_files_free(win);
-
-	win->n_files = g_slist_length(files);
-	win->files = VIPS_ARRAY(NULL, win->n_files + 1, char *);
-	for (i = 0, p = files; i < win->n_files; i++, p = p->next) {
-		GFile *file = G_FILE(p->data);
-
-		win->files[i] = g_file_get_path(file);
-	}
-}
-#endif /*!NIP4*/
 
 static int
 sort_filenames(const void *a, const void *b)
@@ -547,7 +528,8 @@ imagewindow_imageui_add(Imagewindow *win, Imageui *imageui)
 	tilesource_background_load(tilesource);
 }
 
-/* Change the image we are manipulating. The imageui is in the stack already.
+/* Change the image we are manipulating. The imageui is in the stack already,
+ * or NULL for switch to no-image display.
  */
 static void
 imagewindow_imageui_set_visible(Imagewindow *win, Imageui *imageui)
@@ -651,15 +633,20 @@ imagewindow_imageui_set_visible(Imagewindow *win, Imageui *imageui)
 		imagewindow_changed(win);
 
 	// update the menus
-	imagewindow_tilesource_changed(new_tilesource, win);
+	if (new_tilesource)
+		imagewindow_tilesource_changed(new_tilesource, win);
 
-	TilecacheBackground background;
-	g_object_get(win->imageui,
-		"background", &background,
-		NULL);
-	const char *name = vips_enum_nick(TILECACHE_BACKGROUND_TYPE, background);
-	GVariant *state = g_variant_new_string(name);
-	change_state(GTK_WIDGET(win), "background", state);
+	if (imageui) {
+		TilecacheBackground background;
+
+		g_object_get(win->imageui,
+			"background", &background,
+			NULL);
+		const char *name =
+			vips_enum_nick(TILECACHE_BACKGROUND_TYPE, background);
+		GVariant *state = g_variant_new_string(name);
+		change_state(GTK_WIDGET(win), "background", state);
+	}
 }
 
 #ifndef NIP4
@@ -685,7 +672,7 @@ imagewindow_open_current_file(Imagewindow *win)
 		if ((active = imagewindow_active_lookup_by_filename(win, filename))) {
 			imagewindow_active_touch(win, active);
 			imageui = active->imageui;
-		} 
+		}
 		else {
 			/* FIXME ... we only want to revalidate if eg. the timestamp has
 			 * changed, or perhaps on F5?
@@ -868,7 +855,7 @@ imagewindow_set_from_value(Imagewindow *win, const GValue *value)
 		// modifies the string in place, so we must dup
 		g_autofree char *text = g_strstrip(g_strdup(g_value_get_string(value)));
 
-		imagewindow_open_files(win, (char **) &text, 1);
+		imagewindow_open_files(win, &text, 1);
 	}
 	else if (G_VALUE_TYPE(value) == GDK_TYPE_TEXTURE) {
 		GdkTexture *texture = g_value_get_object(value);
@@ -1071,10 +1058,6 @@ imagewindow_replace_result(GObject *source_object,
 
 			imagewindow_error_hide(win);
 			imagewindow_open_gfiles(win, files, n_files);
-
-			for (int i = 0; i < n_files; i++)
-				VIPS_UNREF(files[i]);
-			VIPS_FREE(files);
 		}
 	}
 }
@@ -1588,7 +1571,7 @@ imagewindow_progress_update(Progress *progress,
 	gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(win->progress),
 		progress->percent / 100.0);
 	gtk_progress_bar_set_text(GTK_PROGRESS_BAR(win->progress),
-	vips_buf_all(&progress->feedback));
+		vips_buf_all(&progress->feedback));
 
 	if (win->cancel)
 		*cancel = TRUE;
@@ -1750,12 +1733,10 @@ imagewindow_class_init(ImagewindowClass *class)
 	BIND_VARIABLE(Imagewindow, title);
 	BIND_VARIABLE(Imagewindow, subtitle);
 	BIND_VARIABLE(Imagewindow, gears);
-#ifndef NIP4
-	BIND_VARIABLE(Imagewindow, progress_bar);
-	BIND_VARIABLE(Imagewindow, progress);
-#endif /*!NIP4*/
 	BIND_VARIABLE(Imagewindow, error_bar);
 	BIND_VARIABLE(Imagewindow, error_label);
+	BIND_VARIABLE(Imagewindow, progress_bar);
+	BIND_VARIABLE(Imagewindow, progress);
 	BIND_VARIABLE(Imagewindow, main_box);
 	BIND_VARIABLE(Imagewindow, stack);
 	BIND_VARIABLE(Imagewindow, properties);
@@ -1864,8 +1845,7 @@ imagewindow_iimage_changed(iImage *iimage, Imagewindow *win)
 			imagewindow_imageui_add(win, imageui);
 		}
 
-		const char *filenames = filename;
-		imagewindow_files_set(win, &filenames, 1, FALSE);
+		imagewindow_files_set(win, (char **) &filename, 1, FALSE);
 
 		imagewindow_imageui_set_visible(win, imageui);
 	}
@@ -1949,18 +1929,6 @@ imagewindow_open_files(Imagewindow *win, char **files, int n_files)
 }
 
 void
-imagewindow_open_list_gfiles(Imagewindow *win, GSList *gfiles)
-{
-#ifdef DEBUG
-	printf("imagewindow_open_list_gfiles:\n");
-#endif /*DEBUG*/
-
-	win->transition = GTK_STACK_TRANSITION_TYPE_SLIDE_LEFT;
-	imagewindow_files_set_list_gfiles(win, gfiles);
-	imagewindow_open_current_file(win);
-}
-
-void
 imagewindow_open_gfiles(Imagewindow *win, GFile **gfiles, int n_files)
 {
 #ifdef DEBUG
@@ -1969,7 +1937,31 @@ imagewindow_open_gfiles(Imagewindow *win, GFile **gfiles, int n_files)
 
 	g_auto(GStrv) files = VIPS_ARRAY(NULL, n_files + 1, char *);
 	for (int i = 0; i < n_files; i++)
-		files[i] = g_file_get_path(gfiles[i]);
+		// can fail for eg. URLs etc.
+		if (!(files[i] = g_file_get_path(gfiles[i])))
+			return;
+
+	imagewindow_open_files(win, files, n_files);
+}
+
+void
+imagewindow_open_list_gfiles(Imagewindow *win, GSList *gfiles)
+{
+#ifdef DEBUG
+	printf("imagewindow_open_list_gfiles:\n");
+#endif /*DEBUG*/
+
+	GSList *p;
+	int i;
+
+	int n_files = g_slist_length(gfiles);
+	g_auto(GStrv) files = VIPS_ARRAY(NULL, n_files + 1, char *);
+	for (i = 0, p = gfiles; i < n_files; i++, p = p->next) {
+		GFile *file = G_FILE(p->data);
+
+		if (!(files[i] = g_file_get_path(file)))
+			return;
+	}
 
 	imagewindow_open_files(win, files, n_files);
 }
