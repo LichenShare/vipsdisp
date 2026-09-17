@@ -3,12 +3,13 @@
 Vipsdisp can display huge (many, many gigabyte) images quickly and without
 using much memory. As well as the usual PNG, JPG, TIF, PDF, SVG, WEBP,
 JP2, JXL and GIF, it supports many scientific and technical image formats,
-including RAW, SVS, MRXS, OpenEXR, FITS, Matlab, NIfTI, Analyze, and
+including RAW, SVS, QOI, MRXS, OpenEXR, FITS, Matlab, NIfTI, Analyze, and
 PFM. It can also load camera RAW images, and UltraHDR.
 
 Vipsdisp supports pixel types from 1 bit mono to 128-bit double precision
 complex, you can convert image formats, it implements copy-paste and drag-drop,
-and it has a range of useful visualisation tools and display modes.
+and it has a range of useful visualisation tools and display modes. There's a
+simple paintbox for image annotation.
 
 The vipsdisp image widget is [used by the image processing spreadsheet
 nip4](https://github.com/jcupitt/nip4) for image display, so that might be
@@ -124,6 +125,12 @@ version of Windows, though it will be a bit slower.
   textures. You can paste from the screenshot tool, or drag-drop images from
   your file browser, for example.
 
+- There's a very simple paintbox for image annotation, see View > Paintbox.
+
+- It can load and save HDR metadata in JPG, PNG, AVIF and JXL images,
+  translating between CICP and uhdr as required. There's no HDR display yet
+  though, sadly.
+
 * It uses the gtk4 GUI toolkit, so the interface is fast, attractive
   and nicely animated. The image is rendered with the GPU, so display ought to
   be quick.
@@ -141,6 +148,7 @@ version of Windows, though it will be a bit slower.
 * ctrl-< / ctrl->. prev page, next page
 * alt-Left / alt-Right. prev image, next image
 * Mouse drag to pan
+* Shift + mouse-drag to pan in paintbox mode
 * Mousewheel to zoom
 * Mousewheel + shift/ctrl to pan
 * ^O replace image
@@ -197,8 +205,8 @@ flatpak remote-add --if-not-exists \
 Install the gtk4 SDK and runtime:
 
 ```shell
-flatpak install org.gnome.Sdk//49
-flatpak install org.gnome.Platform//49
+flatpak install org.gnome.Sdk//51
+flatpak install org.gnome.Platform//51
 ```
 
 Allow file. Recent security changes to git will cause submodule checkout

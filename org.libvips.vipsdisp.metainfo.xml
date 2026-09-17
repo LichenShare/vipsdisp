@@ -28,13 +28,18 @@
 Vipsdisp can display huge (many, many gigabyte) images quickly and without
 using much memory.
 
-As well as the usual PNG, JPG, TIF, PDF, SVG, WEBP, JP2, JXL and GIF,
+As well as the usual PNG, JPG, TIF, PDF, SVG, WEBP, JP2, JXL, QOI and GIF,
 it supports many scientific and technical image formats, including SVS,
-MRXS, OpenEXR, FITS, Matlab, NIfTI, Analyze, and PFM.
+MRXS, OpenEXR, FITS, Matlab, NIfTI, Analyze, and PFM. It supports and 
+translates HDR metadata between JPG, PNG, AVIF and JXL, though there's no 
+HDR display yet.
 
 Vipsdisp supports pixel types from 1 bit mono to 128-bit double precision
 complex, you can convert image formats, it support copy-paste and drag-drop,
 and it has a range of useful visualisation tools and display modes.
+
+vipsdisp includes a very simple "paintbox" you can use to annotate images.
+It can paint on images in all these numeric formats.
     </p>
   </description>
 
@@ -62,9 +67,30 @@ and it has a range of useful visualisation tools and display modes.
       <caption>Animated images with alpha channels are also supported</caption>
     </screenshot>
 
+    <screenshot>
+      <image>https://raw.githubusercontent.com/jcupitt/vipsdisp/master/screenshots/paintbox.png</image>
+      <caption>A simple paintbox lets you annotate images</caption>
+    </screenshot>
+
+    <screenshot>
+      <image>https://raw.githubusercontent.com/jcupitt/vipsdisp/master/screenshots/hdr.png</image>
+      <caption>HDR metadata is loaded and saved (though not yet displayed)</caption>
+    </screenshot>
+
   </screenshots>
 
   <releases>
+
+    <release version="4.2.0" date="2026-09-17">
+      <description>
+        <p>
+          This release is based on the latest nip4 code for lots of useful
+          features, speedups and bugfixes. The big one is the new paintbox
+          (see View > Paintbox), a simple tool for annotating images, but
+          there's also support for QOI, PNGA, and HDR metadata.
+        </p>
+      </description>
+    </release>
 
     <release version="4.1.4" date="2026-04-19">
       <description>

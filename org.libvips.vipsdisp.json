@@ -1,7 +1,7 @@
 {
     "app-id" : "org.libvips.vipsdisp",
     "runtime" : "org.gnome.Platform",
-    "runtime-version" : "50",
+    "runtime-version" : "51",
     "sdk" : "org.gnome.Sdk",
     "command" : "vipsdisp",
     "finish-args" : [
@@ -11,9 +11,7 @@
         "--socket=wayland",
         "--talk-name=org.gtk.vfs.*",
         "--filesystem=xdg-run/gvfsd",
-        "--filesystem=home",
-        "--filesystem=/mnt",
-        "--filesystem=/srv"
+        "--filesystem=host"
     ],
     "cleanup" : [
         "/include",
@@ -101,8 +99,21 @@
                 {
                     "type" : "git",
                     "url" : "https://github.com/ebiggers/libdeflate.git",
-                    "tag" : "v1.25",
-                    "commit" : "c8c56a20f8f621e6a966b716b31f1dedab6a41e3"
+                    "tag" : "v1.26",
+                    "commit" : "92e6a0db9fa848d742f9eb286c92afc60f2c3dda"
+                }
+            ]
+        },
+
+        {
+            "name" : "libpng",
+            "builddir" : true,
+            "buildsystem" : "autotools",
+            "sources" : [
+                {
+                    "type" : "git",
+                    "url" : "https://github.com/pnggroup/libpng.git",
+                    "commit" : "964b4135949703b705fc760fc3fb546b86e5ab47"
                 }
             ]
         },
@@ -120,8 +131,8 @@
                 {
                     "type" : "git",
                     "url" : "https://github.com/aous72/OpenJPH.git",
-                    "tag" : "0.26.0",
-                    "commit" : "4d4f4e8b7f00d877d6a615a991b48ad08a640990"
+                    "tag" : "0.31.0",
+                    "commit" : "c68064d0e4cad8e96bab9a068f6cc4e7799744fc"
                 }
             ]
         },
@@ -138,8 +149,7 @@
                 {
                     "type" : "git",
                     "url" : "https://github.com/lovell/libimagequant.git",
-                    "tag" : "v2.4.1",
-                    "commit" : "4e82d9492db228a7a2057c442f7a6eb40508a0eb"
+                    "commit" : "ce5fdeb1ccd9db288950faa21fd09c42c0a59bbb"
                 }
             ]
         },
@@ -188,9 +198,9 @@
             "sources" : [
                 {
                     "type" : "archive",
-                    "url" : "https://poppler.freedesktop.org/poppler-25.06.0.tar.xz",
+                    "url" : "https://poppler.freedesktop.org/poppler-26.09.0.tar.xz",
 
-                    "sha256" : "8199532d38984fab46dbd0020ec9c40f20e928e33e9b4cc6043572603a821d83"
+                    "sha256" : "8059eadb6805340768f138c465b57f8164c92b4a0773c37ef031ea6c0d987b2e"
                 }
             ]
         },
@@ -208,8 +218,8 @@
                 {
                     "type" : "git",
                     "url" : "https://github.com/AcademySoftwareFoundation/Imath.git",
-                    "tag" : "v3.2.2",
-                    "commit" : "1e480d11cb98b032a2dece9b9a8730512effc7f6"
+                    "tag" : "v3.2.3",
+                    "commit" : "5f27ba266d3ea1565e912570c30b5eafc89959f1"
                 }
             ]
         },
@@ -227,8 +237,8 @@
                 {
                     "type" : "git",
                     "url" : "https://github.com/AcademySoftwareFoundation/openexr.git",
-                    "tag" : "v3.4.4",
-                    "commit" : "741ecb82ccdb291ce5b04713fc6c03208753575e"
+                    "tag" : "v3.4.15",
+                    "commit" : "e71cdd5d30a146dcb56c5e4c576d9e9d3c45f4fb"
                 }
             ]
         },
@@ -258,7 +268,7 @@
                 {
                     "type" : "git",
                     "url" : "https://github.com/google/libultrahdr.git",
-                    "commit" : "5ed39d67cd31d254e84ebf76b03d4b7bcc12e2f7"
+                    "commit" : "e5f5a022fe96fc4dc2ee35c19f733a50df807abe"
                 }
             ]
         },
@@ -273,7 +283,7 @@
                 {
                     "type" : "git",
                     "url" : "https://github.com/troydhanson/uthash.git",
-                    "commit" : "ca98384ce7f30beb216f9a0bc88a3b4340ead729"
+                    "commit" : "a49bed0b4abb7dff16c73906dcdc8a9718d582d2"
                 }
             ]
         },
@@ -291,8 +301,8 @@
                 {
                     "type" : "git",
                     "url" : "https://github.com/ImagingDataCommons/libdicom.git",
-                    "tag" : "v1.2.0",
-                    "commit" : "de8c1bbbdcb013948bc690b7024297ea9b61c2df"
+                    "tag" : "v1.3.0",
+                    "commit" : "8c84fdbef433395619f3b099e939d36877a9d48f"
                 }
             ]
         },
@@ -308,8 +318,8 @@
             "sources" : [
                 {
                     "type" : "archive",
-                    "url" : "https://github.com/openslide/openslide/releases/download/v4.0.0/openslide-4.0.0.tar.xz",
-                    "sha256" : "cc227c44316abb65fb28f1c967706eb7254f91dbfab31e9ae6a48db6cf4ae562"
+                    "url" : "https://github.com/openslide/openslide/releases/download/v4.0.1/openslide-4.0.1.tar.xz",
+                    "sha256" : "df82f6b264f98d11eeb80d85bbb10c7935fcd69c7abae1d610ce49b9a0437faf"
                 }
             ]
         },
@@ -322,8 +332,8 @@
                 {
                     "type" : "git",
                     "url" : "https://github.com/HEASARC/cfitsio.git",
-                    "tag" : "cfitsio-4.6.3",
-                    "commit" : "386e719ccc5e30ca497ec2df57c4ef1de5adbc3f"
+                    "tag" : "cfitsio-4.7.0",
+                    "commit" : "d6d27653740864a0483e74cff23c53e34e1dceee"
                 }
             ]
         },
@@ -340,8 +350,8 @@
                 {
                     "type" : "git",
                     "url" : "https://github.com/dloebl/cgif.git",
-                    "tag" : "v0.5.1",
-                    "commit" : "f54941864e8976dc73987e2eccadf2436a172a95"
+                    "tag" : "v0.5.4",
+                    "commit" : "2dfb49c22fbe3894e46731f7e3b6ffa84311e44e"
                 }
             ]
         },
@@ -360,28 +370,8 @@
             "sources" : [
                 {
                     "type" : "archive",
-                    "url" : "https://www.libraw.org/data/LibRaw-0.21.4.tar.gz",
-                    "sha256" : "6be43f19397e43214ff56aab056bf3ff4925ca14012ce5a1538a172406a09e63"
-                }
-            ]
-        },
-
-        {
-            "name" : "libultrahdr",
-            "builddir" : true,
-            "buildsystem" : "cmake-ninja",
-            "build-options" : {
-                "config-opts" : [
-                    "-DCMAKE_INSTALL_LIBDIR=lib",
-                    "-DUHDR_BUILD_EXAMPLES=FALSE",
-                    "-DUHDR_MAX_DIMENSION=65500"
-                ]
-            },
-            "sources" : [
-                {
-                    "type" : "git",
-                    "url" : "https://github.com/google/libultrahdr.git",
-                    "commit" : "8cbc983d2f6c2171af5cbcdb8801102f83fe92ab"
+                    "url" : "https://www.libraw.org/data/LibRaw-0.22.2.tar.gz",
+                    "sha256" : "de86b035655accff8d4010f1a221fdf50d353cb7b1422ba26f14a0db92612cfa"
                 }
             ]
         },
@@ -394,8 +384,8 @@
                 {
                     "type" : "git",
                     "url" : "https://github.com/ImageMagick/ImageMagick",
-                    "tag" : "7.1.2-13",
-                    "commit" : "dd991e286b96918917a3392d6dc3ffc0e6907a4e"
+                    "tag" : "7.1.2-31",
+                    "commit" : "fb965f1b54a65ddb633f8c2eac4452c782c66d7f"
                 }
             ]
         },
@@ -413,8 +403,7 @@
                 {
                     "type" : "git",
                     "url" : "https://github.com/libvips/libvips.git",
-                    "tag" : "v8.18.2",
-                    "commit" : "17ad2f62dda7e39985955da189183e594683d45e"
+                    "commit" : "bb5b1b63c96a699414157dd20ec933af16d7e6a5"
                 }
             ]
         },
@@ -430,8 +419,7 @@
                 {
                     "type" : "git",
                     "url" : "https://github.com/jcupitt/vipsdisp.git",
-                    "tag" : "v4.1.4",
-                    "commit" : "3d7ba5ac71cb9078d9c730fc4d21201f8732b548"
+                    "commit" : "25b5978e04e3706642d23b49a4a9dd8d6cae90c6"
                 }
             ]
         }

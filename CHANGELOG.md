@@ -1,10 +1,14 @@
 master
 
-## 4.2.0 tbd
+## 4.2.0 17/9/26
 
 - resync with nip4 [kleisauke]
 - add the paintbox
 - fix crash with ^V of invalid filenames [porridgewithraisins]
+- PNGA support
+- QOI load and save
+- can load, save, and translate HDR metadata in jpg, png, avif, jxl, though 
+  there's no display yet
 
 ## 4.1.4 19/4/26
 
