@@ -11,7 +11,9 @@
         "--socket=wayland",
         "--talk-name=org.gtk.vfs.*",
         "--filesystem=xdg-run/gvfsd",
-        "--filesystem=host"
+        "--filesystem=home",
+        "--filesystem=/mnt",
+        "--filesystem=/srv"
     ],
     "cleanup" : [
         "/include",
@@ -48,6 +50,8 @@
         "/bin/import",
         "/bin/libdeflate-gunzip",
         "/bin/libdeflate-gzip",
+        "/bin/libpng-config",
+        "/bin/libpng18-config",
         "/bin/magick",
         "/bin/magick-script",
         "/bin/mogrify",
@@ -57,6 +61,8 @@
         "/bin/openslide-quickhash1sum",
         "/bin/openslide-show-properties",
         "/bin/openslide-write-png",
+        "/bin/png-fix-itxt",
+        "/bin/pngfix",
         "/bin/slidetool",
         "/bin/smem",
         "/bin/snip",
@@ -419,7 +425,7 @@
                 {
                     "type" : "git",
                     "url" : "https://github.com/jcupitt/vipsdisp.git",
-                    "commit" : "25b5978e04e3706642d23b49a4a9dd8d6cae90c6"
+                    "commit" : "2648c7696059530924ac3496febcb51ba84fd6cc"
                 }
             ]
         }
